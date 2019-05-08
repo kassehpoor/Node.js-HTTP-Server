@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: pink
+        }
+    </style>
+</head>
+
+<body>
+    <ht>dynamic page serving....</ht>
+    <br></br>
+    <div>
+        <input type="button" value="sendRequest" onclick="sendRequest()" id="RequestButton">
+        <input type="text" id="serverMessage">
+    </div>
+    <script>
+
+        function sendRequest() {
+            var xhttp = new XMLHttpRequest(),
+                input = document.getElementById("serverMessage"),
+                url = '/data/';
+            xhttp.onreadystatechange = function () {
+                /*
+                ['readyState', 'status', 'responseText'].forEach(k => {
+                    console.log(k, '=', xhttp[k]);
+                });
+                console.log('-------------------------------------');
+                */
+               if (xhttp.readyState == 4 && xhttp.status == 200) {
+                   input.value = xhttp.responseText;
+                }
+            };
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader('Content-Type','application/json');
+            var obj = { value: input.value };
+            xhttp.send(JSON.stringify(obj));
+        }
+
+    </script>
+</body>
+
+</html>
